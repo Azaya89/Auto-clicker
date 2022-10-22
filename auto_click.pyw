@@ -3,12 +3,7 @@ import threading
 from pynput.mouse import Button, Controller
 from pynput.keyboard import Listener, KeyCode
 
-
-delay = 0.001
-button = Button.left
-start_stop_key = KeyCode(char='s')
-exit_key = KeyCode(char='e')
-
+mouse = Controller()
 
 class ClickMouse(threading.Thread):
     def __init__(self, delay, button):
@@ -36,20 +31,19 @@ class ClickMouse(threading.Thread):
             time.sleep(0.1)
 
 
-mouse = Controller()
-click_thread = ClickMouse(delay, button)
-click_thread.start()
-
-
 def on_press(key):
-    if key == start_stop_key:
+    if key == KeyCode(char="s"):
         if click_thread.running:
             click_thread.stop_clicking()
         else:
             click_thread.start_clicking()
-    elif key == exit_key:
+    elif key == KeyCode(char="e"):
         click_thread.exit()
         listener.stop()
+
+
+click_thread = ClickMouse(0.001, Button.left)
+click_thread.start()
 
 
 with Listener(on_press=on_press) as listener:
