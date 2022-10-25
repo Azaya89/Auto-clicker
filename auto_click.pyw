@@ -39,7 +39,7 @@ class ClickMouse(threading.Thread):
 
 
 # Create an instance of the ClickMouse class.
-click_thread = ClickMouse(0.001, Button.left)
+click_thread = ClickMouse(0.0001, Button.left)
 
 
 def on_press(key):
